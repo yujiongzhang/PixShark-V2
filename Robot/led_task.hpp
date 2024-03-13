@@ -7,8 +7,7 @@
 extern "C" {
 #endif
 #include <stdint.h>
-
-extern osThreadId led_task_handle;
+extern osSemaphoreId led_semHandle;
 extern uint8_t led_brihtness;
 
 void led_task_start(void);

@@ -25,6 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "iwdg.h"
 #include "common_inc.h"
 /* USER CODE END Includes */
 
@@ -60,10 +61,10 @@ const osThreadAttr_t defaultTask_attributes = {
   .stack_size = 4096 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
-/* Definitions for myQueue01 */
-osMessageQueueId_t myQueue01Handle;
-const osMessageQueueAttr_t myQueue01_attributes = {
-  .name = "myQueue01"
+/* Definitions for watchdog_timer */
+osTimerId_t watchdog_timerHandle;
+const osTimerAttr_t watchdog_timer_attributes = {
+  .name = "watchdog_timer"
 };
 
 /* Private function prototypes -----------------------------------------------*/
@@ -72,6 +73,7 @@ const osMessageQueueAttr_t myQueue01_attributes = {
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void *argument);
+void feeddog_callback(void *argument);
 
 extern void MX_USB_DEVICE_Init(void);
 extern void MX_LWIP_Init(void);
@@ -107,13 +109,13 @@ void MX_FREERTOS_Init(void) {
   /* add semaphores, ... */
   /* USER CODE END RTOS_SEMAPHORES */
 
+  /* Create the timer(s) */
+  /* creation of watchdog_timer */
+  watchdog_timerHandle = osTimerNew(feeddog_callback, osTimerPeriodic, NULL, &watchdog_timer_attributes);
+
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
-
-  /* Create the queue(s) */
-  /* creation of myQueue01 */
-  myQueue01Handle = osMessageQueueNew (16, sizeof(uint16_t), &myQueue01_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -148,6 +150,8 @@ void StartDefaultTask(void *argument)
   /* init code for LWIP */
   MX_LWIP_Init();
   /* USER CODE BEGIN StartDefaultTask */
+  /*Start watchdog timer*/
+  osTimerStart(watchdog_timerHandle, 1000);
   // micro-ROS configuration
   rmw_uros_set_custom_transport(
     false,  //Framing disable here. Udp should Use Packet-oriented mode.
@@ -172,6 +176,15 @@ void StartDefaultTask(void *argument)
 
   vTaskDelete(defaultTaskHandle);
   /* USER CODE END StartDefaultTask */
+}
+
+/* feeddog_callback function */
+void feeddog_callback(void *argument)
+{
+  /* USER CODE BEGIN feeddog_callback */
+  //喂狗
+  HAL_IWDG_Refresh(&hiwdg1);
+  /* USER CODE END feeddog_callback */
 }
 
 /* Private application code --------------------------------------------------*/

@@ -67,8 +67,8 @@ inline float Byte_to_Float(const uint8_t *four_byte, bool isBigEndian = false)
 inline float BCD_SXXXYY_to_Float(uint8_t *four_byte)
 {
 	float float_data=0;
-	float_data = ((*four_byte)& 0x01)*100 + (*(four_byte + 1) & 0x10)*10 + (*(four_byte + 1) & 0x01)*1 + (*(four_byte + 2) & 0x10)*0.1 + (*(four_byte + 2) & 0x01)*0.01 ;
-	if(((*four_byte) & 0x10)){
+	float_data = ((*four_byte)& 0x0f)*100 + (*(four_byte + 1) >> 4)*10 + (*(four_byte + 1) & 0x0f)*1 + (*(four_byte + 2) >> 4)*0.1 + (*(four_byte + 2) & 0x0f)*0.01 ;
+	if(((*four_byte) >> 4)){
     float_data = -float_data;
     }
 	return float_data;
@@ -82,8 +82,24 @@ inline float BCD_SXXXYY_to_Float(uint8_t *four_byte)
 inline float BCD_SXYYYY_to_Float(uint8_t *four_byte)
 {
 	float float_data=0;
-	float_data = ((*four_byte)& 0x01) + (*(four_byte + 1) & 0x10)*0.1 + (*(four_byte + 1) & 0x01)*0.01 + (*(four_byte + 2) & 0x10)*0.001 + (*(four_byte + 2) & 0x01)*0.0001 ;
-	if(((*four_byte) & 0x10)){
+	float_data = ((*four_byte)& 0x0f) + (*(four_byte + 1)>>4)*0.1 + (*(four_byte + 1) & 0x0f)*0.01 + (*(four_byte + 2)>>4)*0.001 + (*(four_byte + 2) & 0x0f)*0.0001 ;
+	if(((*four_byte) >> 4)){
+    float_data = -float_data;
+    }
+	return float_data;
+}
+
+/**
+  * @brief          将4个字节的BCD格式(SXYYYYYY)数据转化为浮点数
+  * @param[in]      four_byte: 待转换四字节指针
+  * @retval         浮点数float(32字节)
+  */
+inline float BCD_SXYYYYYY_to_Float(uint8_t *four_byte)
+{
+	float float_data=0;
+	float_data = ((*four_byte)& 0x0f) + (*(four_byte + 1)>>4)*0.1 + (*(four_byte + 1) & 0x0f)*0.01 + (*(four_byte + 2) >> 4)*0.001 + (*(four_byte + 2) & 0x0f)*0.0001 
+  + (*(four_byte + 3) >> 4)*0.00001 + (*(four_byte + 3) & 0x0f)*0.000001;
+	if(((*four_byte) >> 4)){
     float_data = -float_data;
     }
 	return float_data;

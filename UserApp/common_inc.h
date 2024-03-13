@@ -20,7 +20,8 @@ void Main(void);
 
 extern rcl_publisher_t cabin_info_publisher;
 extern rcl_publisher_t altimeter_publisher;
-extern rcl_publisher_t depth_publisher;  
+extern rcl_publisher_t depth_publisher; 
+extern rcl_publisher_t gps_publisher; 
 extern rcl_publisher_t imu_publisher;  
 extern rclc_parameter_server_t param_server;
 extern rclc_executor_t param_executor;
@@ -37,6 +38,8 @@ extern rclc_executor_t sub_executor;
 #include "cabin_info_task.hpp"
 #include "altimeter_task.hpp"
 #include "imu_task.hpp"
+#include "depth_task.hpp"
+#include "gps_task.hpp"
 #include "led_task.hpp"
 #include "servo_task.hpp"
 #include "param_task.hpp"

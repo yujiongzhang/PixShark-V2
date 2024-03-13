@@ -16,7 +16,7 @@
   */
 
 #include "common_inc.h"
-#include "sht31/sht31.hpp"
+#include "hygrothermograph/sht31/sht31.hpp"
 #include "adc/adc.hpp"
 #include <underwater_robot_msgs/msg/cabin_info.h>
 
@@ -57,6 +57,7 @@ static void cabin_info_task(void * argument)
         msg.humidity = cabin_status.cabin_humidity;
         msg.temperature = cabin_status.cabin_temperature;
         msg.water_level = cabin_status.cabin_water_level;
+        msg.extern_temperature = get_external_temperature();
         rc = rcl_publish(&cabin_info_publisher, &msg, NULL);
         osDelay(1000);
     }

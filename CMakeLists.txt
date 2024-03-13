@@ -102,10 +102,10 @@ include_directories(
   components
   components/algorithm
   # components/controller
-  components/devices
   components/support
   components/hardware
   UserApp
+  UserDevices
 
 )
 
@@ -136,8 +136,8 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
   "components/algorithm/*.*"
   "components/support/*.*"
   "components/hardware/*.*"
-  "components/devices/*.*"
   "UserApp/*.*"
+  "UserDevices/*.*"
   
 )
 

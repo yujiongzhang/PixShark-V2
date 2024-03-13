@@ -27,12 +27,6 @@ void thruster_sub_callback(const void * msgin)
 {
     if(msgin != NULL)
     {
-        // Cast received message to used type
-        // const std_msgs__msg__Int16MultiArray * msg = (const std_msgs__msg__Int16MultiArray *)msgin;
-        // for(int i=0; i< (msg->data.size); i++)
-        // {
-        //     thruster_speed[i] = msg->data.data[i];
-        // }
     }
     
 }
@@ -67,9 +61,15 @@ static void subscription_task(void  * argument)
     crawler_task_start();
     std_msgs__msg__Int16MultiArray crawler_msg;
     std_msgs__msg__Int16MultiArray__init(&crawler_msg);
-    crawler.data.size = CRAWLER_NUM;
-    crawler.data.capacity = CRAWLER_NUM*sizeof(int16_t);
-    crawler.data.data = crawler_speed;
+    crawler_msg.data.size = CRAWLER_NUM;
+    crawler_msg.data.capacity = CRAWLER_NUM*sizeof(int16_t);
+    crawler_msg.data.data = crawler_speed;
+    rc = rclc_executor_add_subscription(
+    &sub_executor, &crawler_subscriber, &crawler_msg,
+    &crawler_sub_callback, ON_NEW_DATA);
+    if (rc != RCL_RET_OK) {
+        printf("Error in rclc_executor_add_subscription. \n");
+    }
     #endif
     for(;;)
     {

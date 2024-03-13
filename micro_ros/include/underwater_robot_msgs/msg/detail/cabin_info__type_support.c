@@ -31,7 +31,7 @@ void underwater_robot_msgs__msg__CabinInfo__rosidl_typesupport_introspection_c__
   underwater_robot_msgs__msg__CabinInfo__fini(message_memory);
 }
 
-static rosidl_typesupport_introspection_c__MessageMember underwater_robot_msgs__msg__CabinInfo__rosidl_typesupport_introspection_c__CabinInfo_message_member_array[4] = {
+static rosidl_typesupport_introspection_c__MessageMember underwater_robot_msgs__msg__CabinInfo__rosidl_typesupport_introspection_c__CabinInfo_message_member_array[5] = {
   {
     "temperature",  // name
     rosidl_typesupport_introspection_c__ROS_TYPE_FLOAT,  // type
@@ -99,13 +99,30 @@ static rosidl_typesupport_introspection_c__MessageMember underwater_robot_msgs__
     NULL,  // fetch(index, &value) function pointer
     NULL,  // assign(index, value) function pointer
     NULL  // resize(index) function pointer
+  },
+  {
+    "extern_temperature",  // name
+    rosidl_typesupport_introspection_c__ROS_TYPE_FLOAT,  // type
+    0,  // upper bound of string
+    NULL,  // members of sub message
+    false,  // is array
+    0,  // array size
+    false,  // is upper bound
+    offsetof(underwater_robot_msgs__msg__CabinInfo, extern_temperature),  // bytes offset in struct
+    NULL,  // default value
+    NULL,  // size() function pointer
+    NULL,  // get_const(index) function pointer
+    NULL,  // get(index) function pointer
+    NULL,  // fetch(index, &value) function pointer
+    NULL,  // assign(index, value) function pointer
+    NULL  // resize(index) function pointer
   }
 };
 
 static const rosidl_typesupport_introspection_c__MessageMembers underwater_robot_msgs__msg__CabinInfo__rosidl_typesupport_introspection_c__CabinInfo_message_members = {
   "underwater_robot_msgs__msg",  // message namespace
   "CabinInfo",  // message name
-  4,  // number of fields
+  5,  // number of fields
   sizeof(underwater_robot_msgs__msg__CabinInfo),
   underwater_robot_msgs__msg__CabinInfo__rosidl_typesupport_introspection_c__CabinInfo_message_member_array,  // message members
   underwater_robot_msgs__msg__CabinInfo__rosidl_typesupport_introspection_c__CabinInfo_init_function,  // function to initialize message memory (memory has to be allocated)

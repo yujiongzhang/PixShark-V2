@@ -16,6 +16,7 @@
  */
 
 #include"fifo/fifo.hpp"
+#include "semphr.h"
 
 #if USE_OS
 
@@ -33,13 +34,10 @@ fifo_single::fifo_single(uint32_t uint_cnt)
     configASSERT(uint_cnt > 0);
 
     //!Define mutex
-    osMutexDef(fifo_mutex);
+    
     //! Create mutex and semaphore
-    #if (osCMSIS < 0x20000U)
-    fifo_mutexHandle = osMutexCreate(osMutex(fifo_mutex));
-    #else
-    fifo_mutexHandle = osMutexNew(osMutex(fifo_mutex));
-    #endif
+    fifo_mutexHandle = xSemaphoreCreateMutex();
+    configASSERT(fifo_mutexHandle != nullptr);
     //! Allocate Memory for pointer of new FIFO
     this->p_start_addr = (uint8_t*)pvPortMalloc(uint_cnt);
     //! Allocate Failure, exit now

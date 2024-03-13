@@ -28,6 +28,8 @@ typedef struct underwater_robot_msgs__msg__CabinInfo
   float water_level;
   /// CPU temperature
   float cpu_temperature;
+  /// enviorment temperature
+  float extern_temperature;
 } underwater_robot_msgs__msg__CabinInfo;
 
 // Struct for a sequence of underwater_robot_msgs__msg__CabinInfo.

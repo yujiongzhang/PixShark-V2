@@ -11,10 +11,19 @@
 #include "rcutils/allocator.h"
 
 
+// Include directives for member types
+// Member `header`
+#include "std_msgs/msg/detail/header__functions.h"
+
 bool
 underwater_robot_msgs__msg__Gps__init(underwater_robot_msgs__msg__Gps * msg)
 {
   if (!msg) {
+    return false;
+  }
+  // header
+  if (!std_msgs__msg__Header__init(&msg->header)) {
+    underwater_robot_msgs__msg__Gps__fini(msg);
     return false;
   }
   // latitude
@@ -28,6 +37,8 @@ underwater_robot_msgs__msg__Gps__fini(underwater_robot_msgs__msg__Gps * msg)
   if (!msg) {
     return;
   }
+  // header
+  std_msgs__msg__Header__fini(&msg->header);
   // latitude
   // longitude
 }
@@ -36,6 +47,12 @@ bool
 underwater_robot_msgs__msg__Gps__are_equal(const underwater_robot_msgs__msg__Gps * lhs, const underwater_robot_msgs__msg__Gps * rhs)
 {
   if (!lhs || !rhs) {
+    return false;
+  }
+  // header
+  if (!std_msgs__msg__Header__are_equal(
+      &(lhs->header), &(rhs->header)))
+  {
     return false;
   }
   // latitude
@@ -55,6 +72,12 @@ underwater_robot_msgs__msg__Gps__copy(
   underwater_robot_msgs__msg__Gps * output)
 {
   if (!input || !output) {
+    return false;
+  }
+  // header
+  if (!std_msgs__msg__Header__copy(
+      &(input->header), &(output->header)))
+  {
     return false;
   }
   // latitude

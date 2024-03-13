@@ -16,7 +16,7 @@
  */
 
 #include "thruster_task.hpp"
-#include "thruster/thruster.hpp"
+#include "thruster/vesc/vesc.hpp"
 
 
 osThreadId thruster_task_handle;
@@ -33,12 +33,12 @@ void thruster_init()
     thrutser_canPtr = new Can(&hfdcan1);
     thrutser_canPtr->start();
     vescesPtr = new VESC[THRUSTER_NUM]{
-    VESC(thrutser_canPtr,Thruster_Vertical_Left_ID),
-    VESC(thrutser_canPtr,Thruster_Vertical_Right_ID),
-    VESC(thrutser_canPtr,Thruster_Horizontal_TopLeft_ID),
     VESC(thrutser_canPtr,Thruster_Horizontal_TopRight_ID),
+    VESC(thrutser_canPtr,Thruster_Horizontal_TopLeft_ID),
     VESC(thrutser_canPtr,Thruster_Horizontal_BottomRight_ID),
-    VESC(thrutser_canPtr,Thruster_Horizontal_BottomLeft_ID)
+    VESC(thrutser_canPtr,Thruster_Horizontal_BottomLeft_ID),
+    VESC(thrutser_canPtr,Thruster_Vertical_Right_ID),
+    VESC(thrutser_canPtr,Thruster_Vertical_Left_ID)
     };
     for(int i =0 ; i < THRUSTER_NUM; i++)
     {
@@ -48,15 +48,22 @@ void thruster_init()
 
 static void thruster_task(void * argument)
 {
+    
     //初始化thruster
     thruster_init();
-    uint8_t current_brightness_level = 0;  //当前barlus灯光亮度档位
     for(;;)
     {
+        osDelay(THRUSTER_CONTROL_PERIOD_MS);
+        uint8_t fdcan_status = READ_BIT(hfdcan1.Instance->PSR, FDCAN_PSR_BO) >> 7;
+        if(fdcan_status == 1)
+        {
+            MX_FDCAN1_Init();
+            thrutser_canPtr->start();
+        }
         for(int i =0 ; i < THRUSTER_NUM; i++)
         {
             osDelay(THRUSTER_CONTROL_PERIOD_MS);
-            vescesPtr[i].set_expect_speed(thruster_speed[i]);//;
+            vescesPtr[i].set_expect_speed(thruster_speed[i]);//
         }
     }
     

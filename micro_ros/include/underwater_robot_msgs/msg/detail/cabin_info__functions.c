@@ -21,6 +21,7 @@ underwater_robot_msgs__msg__CabinInfo__init(underwater_robot_msgs__msg__CabinInf
   // humidity
   // water_level
   // cpu_temperature
+  // extern_temperature
   return true;
 }
 
@@ -34,6 +35,7 @@ underwater_robot_msgs__msg__CabinInfo__fini(underwater_robot_msgs__msg__CabinInf
   // humidity
   // water_level
   // cpu_temperature
+  // extern_temperature
 }
 
 bool
@@ -58,6 +60,10 @@ underwater_robot_msgs__msg__CabinInfo__are_equal(const underwater_robot_msgs__ms
   if (lhs->cpu_temperature != rhs->cpu_temperature) {
     return false;
   }
+  // extern_temperature
+  if (lhs->extern_temperature != rhs->extern_temperature) {
+    return false;
+  }
   return true;
 }
 
@@ -77,6 +83,8 @@ underwater_robot_msgs__msg__CabinInfo__copy(
   output->water_level = input->water_level;
   // cpu_temperature
   output->cpu_temperature = input->cpu_temperature;
+  // extern_temperature
+  output->extern_temperature = input->extern_temperature;
   return true;
 }
 

@@ -20,11 +20,11 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "adc.h"
-#include "crc.h"
 #include "dac.h"
 #include "dma.h"
 #include "fdcan.h"
 #include "i2c.h"
+#include "iwdg.h"
 #include "lwip.h"
 #include "spi.h"
 #include "tim.h"
@@ -96,14 +96,14 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  SCB->CACR|=1<<2;   //开启D-Cache透写
+  SCB->CACR|=1<<2;   //�?坯D-Cache逝写
   /* USER CODE END Init */
 
   /* Configure the system clock */
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-  HAL_Delay(1000);//延时1s，等待网卡初始化
+  HAL_Delay(1000);//延时1s，等待网坡初始化
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -123,8 +123,8 @@ int main(void)
   MX_TIM8_Init();
   MX_DAC1_Init();
   MX_TIM4_Init();
-  MX_CRC_Init();
   MX_FDCAN1_Init();
+  MX_IWDG1_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -174,8 +174,9 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 5;

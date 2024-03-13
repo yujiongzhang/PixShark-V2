@@ -17,7 +17,7 @@
 
 
 #include "crawler_task.hpp"
-#include "crawler/crawler.hpp"
+#include "crawler/giant/giant.hpp"
 #include "RobotConfig.h"
 
 osThreadId crawler_task_handle;

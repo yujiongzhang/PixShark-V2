@@ -173,7 +173,7 @@ SECTIONS
     . = ABSOLUTE(0x30000400);
     *(.Rx_PoolSection) 
   } >RAM_D2 AT> FLASH
-
+  
   /* Remove information from the standard libraries */
   /DISCARD/ :
   {

@@ -119,7 +119,7 @@ float float_deadline(float Value, float minValue, float maxValue)
     return Value;
 }
 
-//int26死区
+//int16死区
 int16_t int16_deadline(int16_t Value, int16_t minValue, int16_t maxValue)
 {
     if (Value < maxValue && Value > minValue)
@@ -141,7 +141,7 @@ float float_constrain(float Value, float minValue, float maxValue)
 }
 
 //限幅函数
-int16_t int16_constrain(int16_t Value, int16_t minValue, int16_t maxValue)
+int32_t int32_constrain(int32_t Value, int32_t minValue, int32_t maxValue)
 {
     if (Value < minValue)
         return minValue;
@@ -197,12 +197,8 @@ void Conversion_Quaternion_to_Euler(float q[4], float* yaw, float* pitch, float*
 }
 
 //欧拉角转四元数
-void Conversion_Euler_to_Quaternion(float q[4], float yaw_d, float pitch_d, float roll_d)
+void Conversion_Euler_to_Quaternion(float q[4], float yaw, float pitch, float roll)
 {
-    //转换弧度
-    float32_t yaw = yaw_d * PI / 180.0f;
-    float32_t pitch = pitch_d * PI / 180.0f;
-    float32_t roll = roll_d * PI / 180.0f;
 
     float32_t cy, sy, cp, sp, cr, sr;
 
@@ -214,8 +210,8 @@ void Conversion_Euler_to_Quaternion(float q[4], float yaw_d, float pitch_d, floa
     cr = arm_cos_f32(roll * 0.5);
     sr = arm_sin_f32(roll * 0.5);
 
-    q[0] = cr * cp * cy + sr * sp * sy;
-    q[1] = sr * cp * cy - cr * sp * sy;
-    q[2] = cr * sp * cy + sr * cp * sy;
-    q[3] = cr * cp * sy - sr * sp * cy;
+    q[0] = cr * cp * cy + sr * sp * sy;     //w
+    q[1] = sr * cp * cy - cr * sp * sy;     //x
+    q[2] = cr * sp * cy + sr * cp * sy;     //y
+    q[3] = cr * cp * sy - sr * sp * cy;     //z
 }

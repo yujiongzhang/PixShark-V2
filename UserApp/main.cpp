@@ -21,7 +21,8 @@
 #include "common_inc.h"
 #include "RobotConfig.h"
 #include <underwater_robot_msgs/msg/cabin_info.h>
-#include <underwater_robot_msgs/msg/altimeter.h>
+#include <underwater_robot_msgs/msg/gps.h>
+#include <std_msgs/msg/Float32.h>
 #include <sensor_msgs/msg/imu.h>
 #include <std_msgs/msg/int16.h>
 #include <std_msgs/msg/int16_multi_array.h>
@@ -30,6 +31,7 @@
 rcl_publisher_t cabin_info_publisher;
 rcl_publisher_t altimeter_publisher;
 rcl_publisher_t depth_publisher;
+rcl_publisher_t gps_publisher;
 rcl_publisher_t imu_publisher;
 rclc_parameter_server_t param_server;
 rclc_executor_t param_executor;
@@ -53,7 +55,7 @@ void Main(void)
         ret =  rclc_support_init(&support, 0, NULL, &allocator);
         osDelay(1000);
     } while (ret != RCL_RET_OK);
-    ret = rclc_node_init_default(&node, "mcu_node", "", &support);
+    ret = rclc_node_init_default(&node, NODE_NAME, ROBOT_NAME, &support);
     if (ret != RCL_RET_OK)
     {
       HAL_NVIC_SystemReset();
@@ -66,9 +68,19 @@ void Main(void)
     rclc_publisher_init_best_effort(
     &altimeter_publisher,
     &node,
-    ROSIDL_GET_MSG_TYPE_SUPPORT(underwater_robot_msgs, msg, Altimeter),
+    ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32),
     ALTIMETER_TOPIC);
     rclc_publisher_init_best_effort(
+    &depth_publisher,
+    &node,
+    ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32),
+    DEPTH_TOPIC);
+    rclc_publisher_init_best_effort(
+    &gps_publisher,
+    &node,
+    ROSIDL_GET_MSG_TYPE_SUPPORT(underwater_robot_msgs, msg, Gps),
+    GPS_TOPIC);
+    rclc_publisher_init_default(
     &imu_publisher,
     &node,
     ROSIDL_GET_MSG_TYPE_SUPPORT(sensor_msgs, msg, Imu),
@@ -93,7 +105,7 @@ void Main(void)
     thruster_subscription_options.qos.depth = 0; // qos: last is best = register semantics
     ret = rcl_subscription_init(&thruster_subscriber, &node, 
     ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int16MultiArray),
-    THRUSTER_TOPIC,
+    THRUSTER_CMD_TOPIC,
     &thruster_subscription_options);
 
     #if CRAWLER_NUM
@@ -113,11 +125,18 @@ void Main(void)
 
     cabin_info_task_start();
     altimeter_task_start();
+    depth_task_start();
+    gps_task_start();
     imu_task_start();
     param_task_start();
     subscription_task_start();
     for(;;)
     {
+      ret = rmw_uros_ping_agent(500, 3);
+      if(ret != RMW_RET_OK)
+      {
+        HAL_NVIC_SystemReset();
+      }
       osDelay(100);
     }
     

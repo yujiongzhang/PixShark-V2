@@ -7,9 +7,8 @@
 extern "C" {
 #endif
 #include <stdint.h>
-
-extern osThreadId servo_task_handle;
-extern uint8_t servo_angle;
+extern osSemaphoreId servo_semHandle;
+extern int8_t servo_angle;
 
 void servo_task_start(void);
 

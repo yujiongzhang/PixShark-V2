@@ -12,6 +12,12 @@
 #include "underwater_robot_msgs/msg/detail/gps__struct.h"
 
 
+// Include directives for member types
+// Member `header`
+#include "std_msgs/msg/header.h"
+// Member `header`
+#include "std_msgs/msg/detail/header__rosidl_typesupport_introspection_c.h"
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -31,7 +37,24 @@ void underwater_robot_msgs__msg__Gps__rosidl_typesupport_introspection_c__Gps_fi
   underwater_robot_msgs__msg__Gps__fini(message_memory);
 }
 
-static rosidl_typesupport_introspection_c__MessageMember underwater_robot_msgs__msg__Gps__rosidl_typesupport_introspection_c__Gps_message_member_array[2] = {
+static rosidl_typesupport_introspection_c__MessageMember underwater_robot_msgs__msg__Gps__rosidl_typesupport_introspection_c__Gps_message_member_array[3] = {
+  {
+    "header",  // name
+    rosidl_typesupport_introspection_c__ROS_TYPE_MESSAGE,  // type
+    0,  // upper bound of string
+    NULL,  // members of sub message (initialized later)
+    false,  // is array
+    0,  // array size
+    false,  // is upper bound
+    offsetof(underwater_robot_msgs__msg__Gps, header),  // bytes offset in struct
+    NULL,  // default value
+    NULL,  // size() function pointer
+    NULL,  // get_const(index) function pointer
+    NULL,  // get(index) function pointer
+    NULL,  // fetch(index, &value) function pointer
+    NULL,  // assign(index, value) function pointer
+    NULL  // resize(index) function pointer
+  },
   {
     "latitude",  // name
     rosidl_typesupport_introspection_c__ROS_TYPE_FLOAT,  // type
@@ -71,7 +94,7 @@ static rosidl_typesupport_introspection_c__MessageMember underwater_robot_msgs__
 static const rosidl_typesupport_introspection_c__MessageMembers underwater_robot_msgs__msg__Gps__rosidl_typesupport_introspection_c__Gps_message_members = {
   "underwater_robot_msgs__msg",  // message namespace
   "Gps",  // message name
-  2,  // number of fields
+  3,  // number of fields
   sizeof(underwater_robot_msgs__msg__Gps),
   underwater_robot_msgs__msg__Gps__rosidl_typesupport_introspection_c__Gps_message_member_array,  // message members
   underwater_robot_msgs__msg__Gps__rosidl_typesupport_introspection_c__Gps_init_function,  // function to initialize message memory (memory has to be allocated)
@@ -89,6 +112,8 @@ static rosidl_message_type_support_t underwater_robot_msgs__msg__Gps__rosidl_typ
 ROSIDL_TYPESUPPORT_INTROSPECTION_C_EXPORT_underwater_robot_msgs
 const rosidl_message_type_support_t *
 ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_introspection_c, underwater_robot_msgs, msg, Gps)() {
+  underwater_robot_msgs__msg__Gps__rosidl_typesupport_introspection_c__Gps_message_member_array[0].members_ =
+    ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_introspection_c, std_msgs, msg, Header)();
   if (!underwater_robot_msgs__msg__Gps__rosidl_typesupport_introspection_c__Gps_message_type_support_handle.typesupport_identifier) {
     underwater_robot_msgs__msg__Gps__rosidl_typesupport_introspection_c__Gps_message_type_support_handle.typesupport_identifier =
       rosidl_typesupport_introspection_c__identifier;

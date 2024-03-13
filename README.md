@@ -98,7 +98,6 @@ PixShark/
 ├── components
 │   ├──algorithm （存放常用数学算法与DSP库文件）
 │   ├── controller（存放控制器实现）
-│   └── devices（存放水下机器人上设备的驱动文件）
 │   ├── hardware（STM32外设基于HAL库的c++封装）
 │   ├── support（存放一些数据结构和校验算法）
 │   ├── common.cpp/hpp（引入RTOS后的通用头文件，重载了operate new/delete，使用FreeRTOS内存管理接口）
@@ -108,7 +107,6 @@ PixShark/
     └── Startup	(启动文件)
 ├── doc	(详细说明文件和记录)
 ├── Drivers	(CUBEMX生成HAL库驱动)
-├── Drivers	(CUBEMX生成HAL库驱动)
 ├── LWIP	(CUBEMX生成LWIP用户接口)
 ├── micro_ros	(micro_ros的头文件与静态库(M7内核))
 ├── Middlewares（CUBEMX生成LWIP、FREERTOS等三方库）
@@ -116,6 +114,7 @@ PixShark/
 │   ├── (others).cpp/h（各个机器人任务的处理函数源文件）
 ├── USB_DEVICE	(CUBEMX生成USB用户接口)
 ├── UserAPP	    (用户二次开发水下机器人接口)
+├── UserDevices	   (用户存放水下机器人上设备的驱动文件)
 ├── openocd.cfg	(openocd配置文件，指定仿真器类型，端口等等)
 ├── pixshark.ioc（CUBEMX工程）
 ├── STM32H743VGTX_FLASH.ld（链接脚本）

@@ -22,6 +22,7 @@ typedef void (*TimerCallback_t)();
 class Timer
 {
 public:
+
     Timer(TIM_HandleTypeDef * htim, timerMode mode);
     virtual ~Timer();
 

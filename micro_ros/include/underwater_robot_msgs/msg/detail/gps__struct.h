@@ -17,9 +17,14 @@ extern "C"
 
 // Constants defined in the message
 
+// Include directives for member types
+// Member 'header'
+#include "std_msgs/msg/detail/header__struct.h"
+
 /// Struct defined in msg/Gps in the package underwater_robot_msgs.
 typedef struct underwater_robot_msgs__msg__Gps
 {
+  std_msgs__msg__Header header;
   /// positive is North latitude
   float latitude;
   /// positive is East longitude
