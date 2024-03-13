@@ -124,10 +124,10 @@ void Main(void)
 
 
     cabin_info_task_start();
-    altimeter_task_start();
-    depth_task_start();
+    // altimeter_task_start();
+    // depth_task_start();
     gps_task_start();
-    imu_task_start();
+    // imu_task_start();
     param_task_start();
     subscription_task_start();
     for(;;)

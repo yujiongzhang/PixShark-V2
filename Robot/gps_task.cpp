@@ -33,7 +33,7 @@ uint8_t gps_rx_buf[2 * GPS_DATA_LENGTH];
 static void gps_task(void *argument)
 {
 	//serial init
-	serial::Serial gps_serial(&huart1);
+	serial::Serial gps_serial(&huart2);
 
 	gps_serial.setTimeout(osWaitForever);
 	gps_serial.open();

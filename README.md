@@ -66,6 +66,7 @@ mkdir build -p && cd build
 #windows环境下可能需要指定构建工具，否则win下cmake会自动帮你选择nmake
 #然而这不是我们期望的，所以需要 -G "Unix Makefiles"指定，Linux环境下不需要
 cmake -G "Unix Makefiles" ..
+cmake -G "MinGW Makefiles" ..
 #根据你CPU的最大核心数决定
 make -j8
 #连接仿真器下载,项目使用STLINK，如果更换，请修改openocd.cfg中的配置
